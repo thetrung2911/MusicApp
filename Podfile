@@ -7,7 +7,11 @@ target 'MusicApp' do
 pod 'Alamofire'
 pod 'SwiftyJSON'
 pod 'SteviaLayout'
-pod 'FBSDKLoginKit'
+pod 'FacebookLogin'
+pod 'FacebookCore'
+pod 'FacebookShare'
+pod 'ZaloSDK'
+pod 'Kingfisher'
 
   # Pods for MusicApp
 
