@@ -12,14 +12,14 @@ import Stevia
 class AlbumTableCell: UITableViewCell {
     lazy var songLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = Font.bold18
         label.textColor = .white
         label.sizeToFit()
         return label
     }()
     lazy var authorLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = Font.system16
         label.textColor = .white
         label.sizeToFit()
         return label

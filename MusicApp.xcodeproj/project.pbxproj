@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		855B5C67F15E0552DC050F2A /* Pods_MusicApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 336B2299245782E2C707831F /* Pods_MusicApp.framework */; };
 		90264BF72372ECAC00117928 /* DataAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90264BF62372ECAC00117928 /* DataAlbum.swift */; };
+		903AAFDE2375EEFD006E9154 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903AAFDD2375EEFD006E9154 /* Font.swift */; };
 		908D3BE323749023009520E4 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D3BE223749023009520E4 /* AlertHelper.swift */; };
 		908D3BE523749064009520E4 /* TPKeyboardAvoidingSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D3BE423749064009520E4 /* TPKeyboardAvoidingSwift.swift */; };
 		908D3BE7237490AB009520E4 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D3BE6237490AB009520E4 /* Validation.swift */; };
@@ -41,6 +42,7 @@
 		2F3851E87F410D0255AD5CC3 /* Pods-MusicApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicApp.release.xcconfig"; path = "Target Support Files/Pods-MusicApp/Pods-MusicApp.release.xcconfig"; sourceTree = "<group>"; };
 		336B2299245782E2C707831F /* Pods_MusicApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusicApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90264BF62372ECAC00117928 /* DataAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAlbum.swift; sourceTree = "<group>"; };
+		903AAFDD2375EEFD006E9154 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		908D3BE223749023009520E4 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		908D3BE423749064009520E4 /* TPKeyboardAvoidingSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPKeyboardAvoidingSwift.swift; sourceTree = "<group>"; };
 		908D3BE6237490AB009520E4 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				90E258502338BA06004B73A9 /* Assets.xcassets */,
 				90E258522338BA06004B73A9 /* LaunchScreen.storyboard */,
 				90E258552338BA06004B73A9 /* Info.plist */,
+				903AAFDD2375EEFD006E9154 /* Font.swift */,
 			);
 			path = MusicApp;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				90FB94ED235D5B2E00CF3A41 /* LoginVC1.swift in Sources */,
 				9090D843234CC5F800EDFD9F /* PlayMusicVC.swift in Sources */,
 				908D3BED2374A796009520E4 /* RegisterVC.swift in Sources */,
+				903AAFDE2375EEFD006E9154 /* Font.swift in Sources */,
 				90E258642338BCC0004B73A9 /* LibraryVC.swift in Sources */,
 				90264BF72372ECAC00117928 /* DataAlbum.swift in Sources */,
 				908D3BE323749023009520E4 /* AlertHelper.swift in Sources */,

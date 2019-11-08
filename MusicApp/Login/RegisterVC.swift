@@ -14,40 +14,49 @@ import Firebase
 class RegisterVC: UIViewController {
     
     let txtName: HoshiTextField = {
-        let tl = HoshiTextField()
-        tl.placeholder = "Nhập tên của bạn"
-        tl.placeholderColor = .white
-        tl.backgroundColor = AppDelegate.backgroundColor
-        tl.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
+        let tf = HoshiTextField()
+        tf.placeholder = "Nhập tên của bạn"
+        tf.placeholderColor = .white
+        tf.placeholderFontScale = 1.0
+        tf.tintColor = .white
+        tf.textColor = .white
+        tf.backgroundColor = AppDelegate.backgroundColor
+        tf.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
         
-        return tl
+        return tf
     }()
     
     let txtEmail: HoshiTextField = {
-        let tl = HoshiTextField()
-        tl.placeholder = "Nhập Email của bạn"
-        tl.placeholderColor = .white
-        tl.backgroundColor = AppDelegate.backgroundColor
-        tl.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
+        let tf = HoshiTextField()
+        tf.placeholder = "Nhập Email của bạn"
+        tf.placeholderColor = .white
+        tf.placeholderFontScale = 1.0
+        tf.tintColor = .white
+        tf.textColor = .white
+        tf.backgroundColor = AppDelegate.backgroundColor
+        tf.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
         
-        return tl
+        return tf
     }()
     
     let txtPassword: HoshiTextField = {
-        let tl = HoshiTextField()
-        tl.placeholder = "Nhập mật khẩu"
-        tl.placeholderColor = .white
-        tl.backgroundColor = AppDelegate.backgroundColor
-        tl.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
+        let tf = HoshiTextField()
+        tf.placeholder = "Nhập mật khẩu"
+        tf.placeholderColor = .white
+        tf.placeholderFontScale = 1.0
+        tf.tintColor = .white
+        tf.textColor = .white
+        tf.backgroundColor = AppDelegate.backgroundColor
+        tf.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
         
-        return tl
+        return tf
     }()
     
     let btnRegister: UIButton = {
         let button = UIButton()
         button.setTitle("Đăng kí", for: .normal)
         button.backgroundColor = UIColor(red:0.35, green:0.69, blue:0.18, alpha:1.0)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = Font.bold24
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 20
         return button
@@ -119,7 +128,11 @@ class RegisterVC: UIViewController {
                                 self.activityIndicator.stopAnimating()
                             })
                             
-                            DispatchQueue.main.async {                                self.navigationController?.pushViewController(setupTabBarController(), animated: true)
+                            DispatchQueue.main.async {
+                                    
+                               let tabBarVC = setupTabBarController()
+                                tabBarVC.navigationItem.hidesBackButton = true
+                                self.navigationController?.pushViewController(tabBarVC, animated: true)
                             }
                             
                         }

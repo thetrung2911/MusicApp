@@ -15,7 +15,7 @@ class SingInVC: UIViewController {
     let lblTitle: UILabel = {
         let label = UILabel()
         label.text = "Đăng Nhập"
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = Font.bold32
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -24,6 +24,9 @@ class SingInVC: UIViewController {
         let tf = HoshiTextField()
         tf.placeholder = "Email hoặc tên người dùng"
         tf.placeholderColor = .white
+        tf.placeholderFontScale = 1.0
+        tf.tintColor = .white
+        tf.textColor = .white
         tf.backgroundColor = AppDelegate.backgroundColor
         tf.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
         return tf
@@ -33,6 +36,9 @@ class SingInVC: UIViewController {
         let tf = HoshiTextField()
         tf.placeholder = "Mật khẩu"
         tf.placeholderColor = .white
+        tf.placeholderFontScale = 1.0
+        tf.tintColor = .white
+        tf.textColor = .white
         tf.backgroundColor = AppDelegate.backgroundColor
         // set underline cho textfield
         tf.setBottomBorder(color: UIColor.white.cgColor,height: 1.0)
@@ -44,7 +50,7 @@ class SingInVC: UIViewController {
         let label = UILabel()
         label.text = "Forgot password?"
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = Font.system12
         return label
     }()
     
@@ -52,7 +58,7 @@ class SingInVC: UIViewController {
         let button = UIButton()
         button.setTitle("Đăng Nhập", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = Font.bold24
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.cornerRadius = 20
@@ -64,7 +70,7 @@ class SingInVC: UIViewController {
         label.text = "Dont have an account? Regsiter"
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = Font.system12
         return label
     }()
     
@@ -105,7 +111,9 @@ class SingInVC: UIViewController {
                 
                 
                 DispatchQueue.main.async {
-                    self.navigationController?.pushViewController(setupTabBarController(), animated: false)
+                    let tabBarVC = setupTabBarController()
+                    tabBarVC.navigationItem.hidesBackButton = true
+                    self.navigationController?.pushViewController(tabBarVC, animated: false)
                     
                 }
                 

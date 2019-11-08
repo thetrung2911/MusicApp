@@ -17,7 +17,7 @@ class LoginVC: UIViewController {
         label.text = "BEST"
         label.textAlignment = .left
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 50)
+        label.font = Font.bold50
         return label
     }()
     let musicLabel: UILabel = {
@@ -25,7 +25,7 @@ class LoginVC: UIViewController {
         label.text = "MUSIC"
         label.textAlignment = .left
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 50)
+        label.font = Font.bold50
         return label
     }()
     let titleLabel1: UILabel = {
@@ -33,7 +33,7 @@ class LoginVC: UIViewController {
         label.text = "Hàng triệu bài hát."
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 26)
+        label.font = Font.bold26
         return label
     }()
     let titleLabel2: UILabel = {
@@ -41,13 +41,13 @@ class LoginVC: UIViewController {
         label.text = "Miễn phí trên Best Music."
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 26)
+        label.font = Font.bold26
         return label
     }()
     let btnFacebook: UIButton = {
         let button = UIButton()
         button.setTitle("TIẾP TỤC VỚI FACEBOOK", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.titleLabel?.font = Font.bold18
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor(red:0.23, green:0.35, blue:0.60, alpha:1.0)
         button.layer.cornerRadius = 15
@@ -56,7 +56,7 @@ class LoginVC: UIViewController {
     let btnRegister: UIButton = {
         let button = UIButton()
         button.setTitle("ĐĂNG KÍ MIỄN PHÍ", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.titleLabel?.font = Font.bold18
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor(red:0.35, green:0.69, blue:0.18, alpha:1.0)
         button.addTarget(self, action: #selector(onRegister), for: .touchUpInside)
@@ -66,7 +66,7 @@ class LoginVC: UIViewController {
     let btnSingIn: UIButton = {
         let button = UIButton()
         button.setTitle("ĐĂNG NHẬP", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.titleLabel?.font = Font.bold18
         button.setTitleColor(AppDelegate.backgroundColor, for: .normal)
         button.addTarget(self, action: #selector(onSingIn), for: .touchUpInside)
         button.backgroundColor = .white
@@ -92,9 +92,9 @@ class LoginVC: UIViewController {
         titleLabel1.top(270).centerHorizontally().height(31)
         titleLabel2.centerHorizontally().height(31).Top == titleLabel1.Bottom
         
-        btnRegister.top(410).centerHorizontally().width(240).height(40)
-        btnFacebook.top(466).centerHorizontally().width(240).height(40)
-        btnSingIn.top(522).centerHorizontally().width(240).height(40)
+        btnRegister.top(410).centerHorizontally().width(80%).height(40)
+        btnFacebook.top(466).centerHorizontally().width(80%).height(40)
+        btnSingIn.top(522).centerHorizontally().width(80%).height(40)
     }
     
     @objc func onRegister(){

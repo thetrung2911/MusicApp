@@ -15,7 +15,7 @@ class HomeTableCell: UITableViewCell {
     let data = DataHome.isDataHome
     lazy var titleLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.font = Font.bold24
         label.textColor = .white
         label.sizeToFit()
         return label
@@ -39,9 +39,9 @@ class HomeTableCell: UITableViewCell {
         sv(titleLabel, albumView)
         backgroundColor = .clear
         
-        titleLabel.top(0).left(8).right(0).height(30)
+        titleLabel.top(0).left(8).right(0).height(40)
         
-        albumView.top(30).left(0).right(0).bottom(0).height(136.5)
+        albumView.top(30).left(0).right(0).bottom(0).height(142)
         
         albumView.backgroundColor = .clear
         albumView.delegate = self

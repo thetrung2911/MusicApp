@@ -26,7 +26,7 @@ class HomeCollectionCell: UICollectionViewCell {
     lazy var nameAlbum: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = Font.bold18
         label.text = ""
         label.textColor = .white
         return label
@@ -34,7 +34,7 @@ class HomeCollectionCell: UICollectionViewCell {
     lazy var titleAlbum: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = Font.system18
         label.text = ""
         label.textColor = .white
         return label
