@@ -13,9 +13,10 @@ import Kingfisher
 
 class PlayMusicVC: UIViewController {
     
-    var onlinePlayer: AVPlayer?
+    static var onlinePlayer: AVPlayer?
+    var timePlay: Timer?
     
-    var isPlaying = false
+    var isPlaying = true
     var isShuffle = false
     var isRepeat = false
     
@@ -24,16 +25,17 @@ class PlayMusicVC: UIViewController {
     var topView = UIView()
     var playView = UIView()
     var lyricsView = UIView()
-    var progressView = UIProgressView()
+    var sliderMusic = UISlider()
     var transparentView = UIView()
     var timerView = UIView()
     let height: CGFloat = 200
     
-    let urlImage = URL(string: "http://0.0.0.0:8888/image/Ai-La-Nguoi-Thuong-Em-Quan-A-P.jpg")
-    
+    static var songURL = ""
+    static var imageURL = ""
+    static var orderArray = Int()
     let ablumLabel: UILabel = {
         let label = UILabel()
-        label.text = "Daily Mix 2"
+        label.text = ""
         label.textAlignment = .center
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -42,7 +44,7 @@ class PlayMusicVC: UIViewController {
     }()
     let songLabel: UILabel = {
         let label = UILabel()
-        label.text = "Ai Là Người Thương Em"
+        label.text = ""
         label.textAlignment = .center
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 24)
@@ -51,7 +53,7 @@ class PlayMusicVC: UIViewController {
     }()
     let singerLabel: UILabel = {
         let label = UILabel()
-        label.text = "Quân A.P"
+        label.text = ""
         label.textAlignment = .center
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 18)
@@ -60,7 +62,7 @@ class PlayMusicVC: UIViewController {
     }()
     let playButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "play"), for: .normal)
+        button.setImage(UIImage(named: "pause"), for: .normal)
         //        button.setBackgroundImage(UIImage(named: "play"), for: .normal)
         button.addTarget(self, action: #selector(onPlayButton), for: .touchUpInside)
         return button
@@ -68,13 +70,13 @@ class PlayMusicVC: UIViewController {
     let nextButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "end"), for: .normal)
-        //        button.addTarget(self, action: #selector(onPlayButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(onNextButton), for: .touchUpInside)
         return button
     }()
     let backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "skip"), for: .normal)
-        //        button.addTarget(self, action: #selector(onPlayButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(onBackButton), for: .touchUpInside)
         return button
     }()
     let clockButton: UIButton = {
@@ -86,7 +88,7 @@ class PlayMusicVC: UIViewController {
     let dotsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "dots"), for: .normal)
-        //        button.addTarget(self, action: #selector(onPlayButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(onDots), for: .touchUpInside)
         return button
     }()
     let repeatButton: UIButton = {
@@ -102,49 +104,46 @@ class PlayMusicVC: UIViewController {
         return button
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = AppDelegate.backColor
-        initOnlinePlayer()
+        view.backgroundColor = AppDelegate.backgroundColor
         
         view.sv(scrollView)
         scrollView.centerHorizontally().top(0).width(100%).bottom(0)
-        //        scrollView.backgroundColor = .white
         
         scrollView.sv(topView, playView, lyricsView)
         
-        
         topView.top(0).width(100%).centerHorizontally().height(400)
-        //        topView.backgroundColor = .red
         
         playView.centerHorizontally().width(100%).height(200).Top == topView.Bottom
-        //        playView.backgroundColor = .orange
         
         lyricsView.centerHorizontally().width(100%).height(300).Top == playView.Bottom
         lyricsView.Bottom == scrollView.Bottom
         lyricsView.backgroundColor = .red
         
-        //        playButton.top(500).width(40).height(40).centerHorizontally()
-        
         autoLayoutTopView()
         autoLayoutPlayView()
         autoLayoutLyricsView()
         autoLayoutTimer()
+        
+        initOnlinePlayer()
+        timePlay?.invalidate()
+        timePlay = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
+        PlayMusicVC.onlinePlayer?.play()
     }
     
     func autoLayoutTopView(){
         let buttonView = UIView()
-        
+        let urlImage = URL(string: PlayMusicVC.imageURL)
         topView.sv(imageView, buttonView)
         
         buttonView.centerHorizontally().top(16).height(32).width(100%)
-        //        buttonView.backgroundColor = .black
         
         buttonView.sv(ablumLabel, dotsButton, clockButton)
         
         ablumLabel.centerHorizontally().centerVertically().width(50%)
-        //        ablumLabel.backgroundColor = .gray
         
         dotsButton.centerVertically().right(8).size(24)
         
@@ -156,6 +155,7 @@ class PlayMusicVC: UIViewController {
         imageView.layer.cornerRadius = 150
         imageView.clipsToBounds = true
     }
+    
     func autoLayoutPlayView(){
         
         let timeView = UIView()
@@ -167,16 +167,14 @@ class PlayMusicVC: UIViewController {
         singerLabel.centerHorizontally().width(50%).Top == songLabel.Bottom + 4
         
         timeView.centerHorizontally().width(90%).height(30).Top == singerLabel.Bottom + 4
-        timeView.sv(progressView)
+        timeView.sv(sliderMusic)
         
-        progressView.top(4).centerHorizontally().width(100%).height(4)
-        progressView.progressTintColor = .green
-        progressView.backgroundColor = .white
-        progressView.layer.cornerRadius = 2
-        progressView.clipsToBounds = true
+        sliderMusic.top(4).centerHorizontally().width(100%).height(4)
+        sliderMusic.backgroundColor = .white
+        sliderMusic.layer.cornerRadius = 2
+        sliderMusic.clipsToBounds = true
         
         buttonView.centerHorizontally().width(90%).height(64).Top == timeView.Bottom + 4
-        //        buttonView.backgroundColor = .black
         
         buttonView.sv(playButton, nextButton, backButton,repeatButton , shuffleButton)
         
@@ -207,7 +205,7 @@ class PlayMusicVC: UIViewController {
         let timeLabel = UILabel()
         let timeSW = UISwitch()
         
-        timerView.backgroundColor = AppDelegate.backColor
+        timerView.backgroundColor = AppDelegate.backgroundColor
         timerView.sv(topView,betweenView,closeButton)
         
         topView.centerHorizontally().width(90%).height(50).top(0)
@@ -219,7 +217,7 @@ class PlayMusicVC: UIViewController {
         title.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         
         timeSW.centerVertically().right(0).height(31).width(51)
-//        timeSW.isOn = true
+        //        timeSW.isOn = true
         
         betweenView.centerHorizontally().width(90%).height(110).top(50)
         
@@ -229,6 +227,43 @@ class PlayMusicVC: UIViewController {
         
     }
     
+    // sự kiện next bài
+    @objc func onNextButton(){
+        if PlayMusicVC.orderArray == AlbumVC.songArray.count - 1 {
+            PlayMusicVC.orderArray = 0
+        }else{
+            PlayMusicVC.orderArray += 1
+        }
+        PlayMusicVC.songURL = AppDelegate.ipConnect + "audio/" + AlbumVC.songArray[PlayMusicVC.orderArray].file
+        PlayMusicVC.imageURL = AppDelegate.ipConnect + "image/" + AlbumVC.songArray[PlayMusicVC.orderArray].photo
+        songLabel.text = AlbumVC.songArray[PlayMusicVC.orderArray].song
+        singerLabel.text = AlbumVC.songArray[PlayMusicVC.orderArray].author
+        imageView.kf.setImage(with: URL(string: PlayMusicVC.imageURL))
+        initOnlinePlayer()
+        timePlay?.invalidate()
+        timePlay = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
+        PlayMusicVC.onlinePlayer?.play()
+    }
+    
+    // sự kiện backButton
+    @objc func onBackButton(){
+        if PlayMusicVC.orderArray == 0 {
+            PlayMusicVC.orderArray = AlbumVC.songArray.count - 1
+        }else{
+            PlayMusicVC.orderArray -= 1
+        }
+        PlayMusicVC.songURL = AppDelegate.ipConnect + "audio/" + AlbumVC.songArray[PlayMusicVC.orderArray].file
+        PlayMusicVC.imageURL = AppDelegate.ipConnect + "image/" + AlbumVC.songArray[PlayMusicVC.orderArray].photo
+        songLabel.text = AlbumVC.songArray[PlayMusicVC.orderArray].song
+        singerLabel.text = AlbumVC.songArray[PlayMusicVC.orderArray].author
+        imageView.kf.setImage(with: URL(string: PlayMusicVC.imageURL))
+        initOnlinePlayer()
+        timePlay?.invalidate()
+        timePlay = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
+        PlayMusicVC.onlinePlayer?.play()
+    }
+    
+    // sự kiện phát lại nhạc
     @objc func onRepeatButton(){
         repeatButton.isSelected = !repeatButton.isSelected
         if !isRepeat {
@@ -239,6 +274,7 @@ class PlayMusicVC: UIViewController {
             isRepeat = false
         }
     }
+    // sự kiện xáo trộn nhạc khi phát
     @objc func onShuffleButton(){
         shuffleButton.isSelected = !shuffleButton.isSelected
         if !isShuffle {
@@ -249,30 +285,79 @@ class PlayMusicVC: UIViewController {
             isShuffle = false
         }
     }
+    
+    // sự kiện play/pause phát nhạc
     @objc func onPlayButton(){
         playButton.isSelected = !playButton.isSelected
         if !isPlaying {
-            onlinePlayer?.play()
+            PlayMusicVC.onlinePlayer?.play()
             playButton.setImage(UIImage(named: "pause"), for: .normal)
+            timePlay = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
+            //            rotate2(imageView: imageView, aCircleTime: 20)
             isPlaying = true
         } else {
-            onlinePlayer?.pause()
+            PlayMusicVC.onlinePlayer?.pause()
             playButton.setImage(UIImage(named: "play"), for: .normal)
+            timePlay?.invalidate()
+            //            rotate2(imageView: imageView, aCircleTime: 20)
             isPlaying = false
         }
     }
     
+    // sự kiện tap lựa chọn của trang phát nhạc
+    @objc func onDots(){
+        let optionPlay = OpPlayMusicVC()
+        optionPlay.lblSong.text = songLabel.text
+        optionPlay.lblAuthor.text = singerLabel.text
+        self.present(optionPlay, animated: true, completion: nil)
+    }
+    
+    // phát nhạc online (mới chỉ phát nhạc)
     func initOnlinePlayer() {
-        let url = URL(string: "http://0.0.0.0:8888/audio/Ai-La-Nguoi-Thuong-Em-Quan-A-P.mp3")
-        onlinePlayer = AVPlayer(url: url!)
-        guard let duration = onlinePlayer?.currentItem?.asset.duration else {
-            return
+        let url = URL(string: PlayMusicVC.songURL)
+        PlayMusicVC.onlinePlayer = AVPlayer(url: url!)
+        if PlayMusicVC.onlinePlayer != nil{
+            guard let duration = PlayMusicVC.onlinePlayer?.currentItem!.asset.duration else {
+                return
+            }
+            print(duration)
+            let durationBySecond = CMTimeGetSeconds((PlayMusicVC.onlinePlayer?.currentTime())!)
+            
+            //            print(durationBySecond)
+            //            let min = Int(durationBySecond) / 60
+            //            let second = Int(durationBySecond) % 60
+            //        self.lbEnd.text = "\(min):\(second)"
+            //            print("\(min):\(second)")
+            
+            //            self.sliderMusic.maximumValue = Float(durationBySecond)
         }
-        let durationBySecond = CMTimeGetSeconds(duration)
-        //        let min = Int(durationBySecond) / 60
-        //        let second = Int(durationBySecond) % 60
-        //        self.lbEnd.text = "\(min):\(second)"
-        //        self.sliderMusic.maximumValue = Float(durationBySecond)
+        
+    }
+    // slider chạy theo thời gian của nhạc (chưa xong)
+    @objc func updateSlider() {
+        if PlayMusicVC.onlinePlayer != nil {
+            
+            let currentTimeBySecond = CMTimeGetSeconds((PlayMusicVC.onlinePlayer!.currentTime()))
+            sliderMusic.value = Float(currentTimeBySecond)
+        }
+    }
+    
+    // sự kiện xoay ảnh khi phát nhạc (chưa xong)
+    func rotate2(imageView: UIImageView, aCircleTime: Double) { //UIView
+        
+        if !isPlaying{
+            UIView.animate(withDuration: aCircleTime/2, delay: 0.0, options: .curveLinear, animations: {
+                imageView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+            }, completion: { finished in
+                UIView.animate(withDuration: aCircleTime/2, delay: 0.0, options: .curveLinear, animations: {
+                    imageView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi*2))
+                }, completion: { finished in
+                    self.rotate2(imageView: imageView, aCircleTime: aCircleTime)
+                })
+            })
+        }else{
+            
+        }
     }
     
     // click vào đồng hồ thì hiện bảng hẹn giờ tắt nhạc
@@ -299,7 +384,7 @@ class PlayMusicVC: UIViewController {
         
     }
     
-    // click ngoài thì ẩn lại view
+    // click ngoài thì ẩn view hẹn giờ tắt nhạc
     @objc func onClickTransparentView() {
         let screenSize = UIScreen.main.bounds.size
         

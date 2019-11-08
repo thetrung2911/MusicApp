@@ -12,7 +12,7 @@ class SearchVC: UIViewController {
 
     override func viewDidLoad(){
         super.viewDidLoad()
-        view.backgroundColor = AppDelegate.backColor
+        view.backgroundColor = AppDelegate.backgroundColor
        
     }
     
