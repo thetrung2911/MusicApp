@@ -125,6 +125,7 @@ extension HomeTableCell: UICollectionViewDelegate, UICollectionViewDataSource, U
             let item = data.albumArray0[indexPath.row]
             albumVC.navigationItem.title = item.nameAlbum
             AlbumVC.urlAblum = AppDelegate.ipConnect + item.nameAlbum
+            print(AlbumVC.urlAblum)
             homeVC?.navigationController?.pushViewController(albumVC, animated: true)
             print(item.nameAlbum!)
         case 1:

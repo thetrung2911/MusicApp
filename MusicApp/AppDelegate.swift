@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     static let backgroundColor = UIColor(red:0.33, green:0.33, blue:0.33, alpha:1.0)
-    static let ipConnect = "http://192.168.1.22:8888/"
+    static let ipConnect = "http://5458f288.ngrok.io/"
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
